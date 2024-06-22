@@ -28,8 +28,8 @@ export const AdminUser = () => {
     }
 
         // delete the User on delete button
-        const deleteUser =(id) => {
-            console.log(id)
+        const deleteUser =(_id) => {
+            console.log(_id)
         }
 
     useEffect(() => {
@@ -60,9 +60,9 @@ export const AdminUser = () => {
                                     <td> {curUser.name} </td>
                                     <td> {curUser.email} </td>
                                     <td> {curUser.number} </td>
-                                    <td> Edit </td>
-                                    <td> 
-                                        Delete </td>
+                                    <td> <button className="btn btn-warning btn-sm"> Edit </button>  </td>
+                                    <td> <button className="btn btn-danger btn-sm"> Delete </button>  </td>
+                                    
                                     </tr>
                                 )
                             })}
