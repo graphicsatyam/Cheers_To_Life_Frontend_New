@@ -19,13 +19,8 @@ const SignupPage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    console.log("hloo");
-
-    console.log('satyam')
-
+    
     e.preventDefault();
-
-
 
 
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/signup`, {

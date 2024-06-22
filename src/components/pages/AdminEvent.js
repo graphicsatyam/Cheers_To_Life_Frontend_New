@@ -37,6 +37,7 @@ const AdminEvent = () => {
 
     // Handle the deletion of an event
     const handleDelete = async (eventId) => {
+       
         try {
             await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/admin/events/${eventId}`, {
                 headers: {
@@ -44,7 +45,7 @@ const AdminEvent = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            setEvents(events.filter(event => event.id !== eventId));
+            setEvents(events.filter(event => event._id !== eventId));
         } catch (error) {
             console.error('Error deleting event:', error);
         }
@@ -54,13 +55,13 @@ const AdminEvent = () => {
     const handleSave = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/admin/events/${selectedEvent.id}`, selectedEvent, {
+            await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/admin/events/${selectedEvent._id}`, selectedEvent, {
                 headers: {
                     'Authorization': `Bearer ${process.env.REACT_APP_API_TOKEN}`, // Ensure the token is set in .env
                     'Content-Type': 'application/json'
                 }
             });
-            setEvents(events.map(event => event.id === selectedEvent.id ? selectedEvent : event));
+            setEvents(events.map(event => event._id === selectedEvent._id ? selectedEvent : event));
             setIsModalOpen(false);
         } catch (error) {
             console.error('Error updating event:', error);
@@ -83,10 +84,10 @@ const AdminEvent = () => {
     };
 
     // Format time to a readable format
-    const formatTime = (timeString) => {
-        const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-        return new Date(timeString).toLocaleTimeString(undefined, options);
-    };
+    // const formatTime = (timeString) => {
+    //     const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    //     return new Date(timeString).toLocaleTimeString(undefined, options);
+    // };
 
     return (
         <>
@@ -100,9 +101,10 @@ const AdminEvent = () => {
                                 <th>Event Name</th>
                                 <th>Starting Date</th>
                                 <th>Ending Date</th>
+                                <th> Timing </th>
                                 <th>Guest</th>
                                 <th>Description</th>
-                                <th>Edit</th>
+                                <th>Edit</th>    
                                 <th>Delete</th>
                             </tr>
                         </thead>
@@ -112,13 +114,14 @@ const AdminEvent = () => {
                                     <tr key={index}>
                                         <td>{formatDate(curEvent.uploadedDate)}</td>
                                         <td>{curEvent.eventName}</td>
-                                        <td>{`${formatDate(curEvent.startingDate)} ${formatTime(curEvent.startingDate)}`}</td>
-                                        <td>{`${formatDate(curEvent.endingDate)} ${formatTime(curEvent.endingDate)}`}</td>
+                                        <td>{`${formatDate(curEvent.startingDate)}`}</td>
+                                        <td>{`${formatDate(curEvent.endingDate)}`}</td>
+                                        <td>{curEvent.time}</td>
                                         <td>{curEvent.guest}</td>
                                         <td>{curEvent.description}</td>
                                         <td><button className="btn btn-warning btn-sm" onClick={() => handleEdit(curEvent)}>Edit</button></td>
-                                        <td><button className="btn btn-danger btn-sm" onClick={() => handleDelete(curEvent.id)}>Delete</button></td>
-                                    </tr>
+                                        <td><button className="btn btn-danger btn-sm" onClick={() => handleDelete(curEvent._id)}>Delete</button></td>
+                                    </tr>   
                                 ))
                             ) : (
                                 <tr>
@@ -188,7 +191,7 @@ const AdminEvent = () => {
                                 required
                             />
                         </div>
-                        <button type="submit" className="btn btn-primary">Save</button>
+                        <button type="submit" className="btn btn-primary" onClick={handleSave} >Save</button>
                         <button type="button" className="btn btn-secondary" onClick={() => setIsModalOpen(false)}>Cancel</button>
                     </form>
                 </Modal>

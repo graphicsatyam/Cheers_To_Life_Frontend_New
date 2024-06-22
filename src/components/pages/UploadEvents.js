@@ -20,8 +20,12 @@ const UploadEvents = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
+
+    
+
     e.preventDefault();
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/admin/events`, {
+      
       uploadedDate,
       eventName,
       startingDate,

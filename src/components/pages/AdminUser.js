@@ -27,6 +27,11 @@ export const AdminUser = () => {
         }
     }
 
+        // delete the User on delete button
+        const deleteUser =(id) => {
+            console.log(id)
+        }
+
     useEffect(() => {
         getAllUsersData();
     }, []); // Empty dependency array ensures this runs only once on mount
@@ -56,7 +61,8 @@ export const AdminUser = () => {
                                     <td> {curUser.email} </td>
                                     <td> {curUser.number} </td>
                                     <td> Edit </td>
-                                    <td> Delete </td>
+                                    <td> 
+                                        Delete </td>
                                     </tr>
                                 )
                             })}
